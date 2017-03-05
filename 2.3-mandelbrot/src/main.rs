@@ -1,16 +1,13 @@
 extern crate num;
-use num::Complex;
-
 extern crate image;
+extern crate crossbeam;
+
+use num::Complex;
 use image::ColorType;
 use image::png::PNGEncoder;
 use std::fs::File;
-
 use std::io::Write;
-
 use std::str::FromStr;
-
-extern crate crossbeam;
 
 fn main() {
     let args: Vec<String> = std::env::args().collect();
@@ -50,9 +47,9 @@ fn main() {
         });
     }
 
-
     write_bitmap(&args[1], &pixels, bounds).expect("error writing PNG file");
 }
+
 /// Render a rectangle of the Mandelbrot set into a buffer of pixels.
 ///
 /// The `bounds` argument gives the width and height of the buffer `pixels`,
@@ -97,6 +94,7 @@ fn pixel_to_point(bounds: (usize, usize),
     (upper_left.0 + pixel.0 as f64 * width / bounds.0 as f64,
      upper_left.1 - pixel.1 as f64 * height / bounds.1 as f64)
 }
+
 #[test]
 fn test_pixel_to_point() {
     assert_eq!(pixel_to_point((100, 100), (25, 75), (-1.0, 1.0), (1.0, -1.0)),
@@ -128,11 +126,11 @@ fn write_bitmap(filename: &str,
                 pixels: &[u8],
                 bounds: (usize, usize))
                 -> Result<(), std::io::Error> {
-    let output = File::create(filename)?;;;;;;;;;;
+    let output = File::create(filename)?;;;;;;;;;;;;;
     let encoder = PNGEncoder::new(output);
     encoder.encode(&pixels,
-bounds.0 as u32, bounds.1 as u32,
-ColorType::Gray(8))?;;;;;;;;;;
+        bounds.0 as u32, bounds.1 as u32,
+        ColorType::Gray(8))?;;;;;;;;;;;;;
     Ok(())
 }
 
